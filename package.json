@@ -1,0 +1,15 @@
+{
+  "name": "MailingList",
+  "version": "1.0.0",
+  "description": "A mailing list that collects users' email addresses, allows us to log in and see those email addresses, compose a message, save the message to disk for further use, and then send that message.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Donnie Wang",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.12.0",
+    "express": "^4.12.0"
+  }
+}

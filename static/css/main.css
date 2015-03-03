@@ -1,0 +1,33 @@
+.navbar-default {
+	background-color: #cdced5;
+	font-family: "HelveticaNeue-Medium";
+	font-size: 36px;
+	height: 60px;
+}
+
+body {
+  margin: 0;
+  font-family: "HelveticaNeue-Light";
+  background-color: #080A30;
+/*  background: url('../images/background.gif') center center fixed;
+  background-size: cover;
+  background-repeat: no-repeat;*/
+}
+
+.spaceman {
+	padding-top: 2%;
+}
+
+.signup {
+	width: 70%;
+	text-align: center;
+	height: 40px;
+	font-size: 17px;
+	padding: 0 0 4px 0;
+}
+
+.jumbotron {
+	background-color: #cdced5;
+	color: #202244;
+	padding: 30px;
+}
