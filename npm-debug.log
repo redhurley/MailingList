@@ -1,0 +1,252 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'pg', '-g' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.36
+4 verbose cache add [ 'pg', null ]
+5 verbose cache add name=undefined spec="pg" args=["pg",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'pg',
+6 verbose parsed url   path: 'pg',
+6 verbose parsed url   href: 'pg' }
+7 silly lockFile 96dd8d96-pg pg
+8 verbose lock pg /Users/donnie/.npm/96dd8d96-pg.lock
+9 silly lockFile 96dd8d96-pg pg
+10 silly lockFile 96dd8d96-pg pg
+11 verbose addNamed [ 'pg', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 48c85ce3-pg pg@
+14 verbose lock pg@ /Users/donnie/.npm/48c85ce3-pg.lock
+15 silly addNameRange { name: 'pg', range: '*', hasData: false }
+16 verbose request where is /pg
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 0f43ce3bcf7dd41e
+19 verbose url raw /pg
+20 verbose url resolving [ 'https://registry.npmjs.org/', './pg' ]
+21 verbose url resolved https://registry.npmjs.org/pg
+22 verbose request where is https://registry.npmjs.org/pg
+23 info trying registry request attempt 1 at 18:01:20
+24 verbose etag "42ABKDCKSV46DJDDJ791I34OB"
+25 http GET https://registry.npmjs.org/pg
+26 http 304 https://registry.npmjs.org/pg
+27 silly registry.get cb [ 304,
+27 silly registry.get   { date: 'Wed, 04 Mar 2015 02:01:23 GMT',
+27 silly registry.get     server: 'Apache',
+27 silly registry.get     via: '1.1 varnish',
+27 silly registry.get     'last-modified': 'Wed, 04 Mar 2015 02:01:23 GMT',
+27 silly registry.get     'cache-control': 'max-age=60',
+27 silly registry.get     etag: '"42ABKDCKSV46DJDDJ791I34OB"',
+27 silly registry.get     age: '0',
+27 silly registry.get     'x-served-by': 'cache-lax1423-LAX',
+27 silly registry.get     'x-cache': 'MISS',
+27 silly registry.get     'x-cache-hits': '0',
+27 silly registry.get     'x-timer': 'S1425434483.095925,VS0,VE356',
+27 silly registry.get     vary: 'Accept',
+27 silly registry.get     'content-length': '0',
+27 silly registry.get     'keep-alive': 'timeout=10, max=50',
+27 silly registry.get     connection: 'Keep-Alive' } ]
+28 verbose etag https://registry.npmjs.org/pg from cache
+29 silly addNameRange number 2 { name: 'pg', range: '*', hasData: true }
+30 silly addNameRange versions [ 'pg',
+30 silly addNameRange   [ '0.4.1',
+30 silly addNameRange     '0.5.0',
+30 silly addNameRange     '0.5.1',
+30 silly addNameRange     '0.5.2',
+30 silly addNameRange     '0.5.3',
+30 silly addNameRange     '0.5.4',
+30 silly addNameRange     '0.5.5',
+30 silly addNameRange     '0.5.6',
+30 silly addNameRange     '0.5.7',
+30 silly addNameRange     '0.5.8',
+30 silly addNameRange     '0.6.0',
+30 silly addNameRange     '0.6.1',
+30 silly addNameRange     '0.6.2',
+30 silly addNameRange     '0.6.3',
+30 silly addNameRange     '0.6.4',
+30 silly addNameRange     '0.6.5',
+30 silly addNameRange     '0.6.6',
+30 silly addNameRange     '0.6.7',
+30 silly addNameRange     '0.6.8',
+30 silly addNameRange     '0.6.9',
+30 silly addNameRange     '0.6.10',
+30 silly addNameRange     '0.6.11',
+30 silly addNameRange     '0.6.12',
+30 silly addNameRange     '0.6.13',
+30 silly addNameRange     '0.6.14',
+30 silly addNameRange     '0.6.15',
+30 silly addNameRange     '0.6.16',
+30 silly addNameRange     '0.6.17',
+30 silly addNameRange     '0.6.18',
+30 silly addNameRange     '0.7.0',
+30 silly addNameRange     '0.7.1',
+30 silly addNameRange     '0.7.2',
+30 silly addNameRange     '0.8.0',
+30 silly addNameRange     '0.8.1',
+30 silly addNameRange     '0.8.2',
+30 silly addNameRange     '0.8.3',
+30 silly addNameRange     '0.8.4',
+30 silly addNameRange     '0.8.6',
+30 silly addNameRange     '0.8.7',
+30 silly addNameRange     '0.8.8',
+30 silly addNameRange     '0.9.0',
+30 silly addNameRange     '0.10.0',
+30 silly addNameRange     '0.10.2',
+30 silly addNameRange     '0.11.1',
+30 silly addNameRange     '0.11.2',
+30 silly addNameRange     '0.11.3',
+30 silly addNameRange     '0.12.0',
+30 silly addNameRange     '0.12.1',
+30 silly addNameRange     '0.12.3',
+30 silly addNameRange     '0.13.0',
+30 silly addNameRange     '0.13.1',
+30 silly addNameRange     '0.13.3',
+30 silly addNameRange     '0.14.0',
+30 silly addNameRange     '0.14.1',
+30 silly addNameRange     '0.15.0',
+30 silly addNameRange     '0.15.1',
+30 silly addNameRange     '1.0.0',
+30 silly addNameRange     '1.0.1',
+30 silly addNameRange     '1.0.2',
+30 silly addNameRange     '1.0.3',
+30 silly addNameRange     '1.0.4',
+30 silly addNameRange     '1.1.0',
+30 silly addNameRange     '1.1.1',
+30 silly addNameRange     '1.1.2',
+30 silly addNameRange     '1.1.3',
+30 silly addNameRange     '1.2.0',
+30 silly addNameRange     '1.3.0',
+30 silly addNameRange     '2.0.0',
+30 silly addNameRange     '2.1.0',
+30 silly addNameRange     '2.2.0',
+30 silly addNameRange     '2.3.0',
+30 silly addNameRange     '2.3.1',
+30 silly addNameRange     '2.4.0',
+30 silly addNameRange     '2.5.0',
+30 silly addNameRange     '2.5.1',
+30 silly addNameRange     '2.6.0',
+30 silly addNameRange     '2.6.1',
+30 silly addNameRange     '2.6.2',
+30 silly addNameRange     '2.7.0',
+30 silly addNameRange     '2.8.0',
+30 silly addNameRange     '2.8.1',
+30 silly addNameRange     '2.8.2',
+30 silly addNameRange     '2.8.3',
+30 silly addNameRange     '2.8.4',
+30 silly addNameRange     '2.8.5',
+30 silly addNameRange     '2.9.0',
+30 silly addNameRange     '2.10.0',
+30 silly addNameRange     '2.11.0',
+30 silly addNameRange     '2.11.1',
+30 silly addNameRange     '3.0.2',
+30 silly addNameRange     '3.0.3',
+30 silly addNameRange     '3.1.0',
+30 silly addNameRange     '3.2.0',
+30 silly addNameRange     '3.3.0',
+30 silly addNameRange     '3.4.0',
+30 silly addNameRange     '3.4.1',
+30 silly addNameRange     '3.4.2',
+30 silly addNameRange     '3.4.3',
+30 silly addNameRange     '3.4.4',
+30 silly addNameRange     '3.4.5',
+30 silly addNameRange     '3.5.0',
+30 silly addNameRange     '3.6.0',
+30 silly addNameRange     '4.0.0-beta2',
+30 silly addNameRange     '3.6.1',
+30 silly addNameRange     '3.6.2',
+30 silly addNameRange     '3.6.3',
+30 silly addNameRange     '4.0.0',
+30 silly addNameRange     '4.1.0',
+30 silly addNameRange     '4.1.1',
+30 silly addNameRange     '4.2.0',
+30 silly addNameRange     '4.3.0' ] ]
+31 verbose addNamed [ 'pg', '4.3.0' ]
+32 verbose addNamed [ '4.3.0', '4.3.0' ]
+33 silly lockFile 7eff40c7-pg-4-3-0 pg@4.3.0
+34 verbose lock pg@4.3.0 /Users/donnie/.npm/7eff40c7-pg-4-3-0.lock
+35 silly lockFile 7eff40c7-pg-4-3-0 pg@4.3.0
+36 silly lockFile 7eff40c7-pg-4-3-0 pg@4.3.0
+37 silly lockFile 48c85ce3-pg pg@
+38 silly lockFile 48c85ce3-pg pg@
+39 silly resolved [ { name: 'pg',
+39 silly resolved     version: '4.3.0',
+39 silly resolved     description: 'PostgreSQL client - pure javascript & libpq with the same API',
+39 silly resolved     keywords: [ 'postgres', 'pg', 'libpq', 'postgre', 'database', 'rdbms' ],
+39 silly resolved     homepage: 'http://github.com/brianc/node-postgres',
+39 silly resolved     repository:
+39 silly resolved      { type: 'git',
+39 silly resolved        url: 'git://github.com/brianc/node-postgres.git' },
+39 silly resolved     author: { name: 'Brian Carlson', email: 'brian.m.carlson@gmail.com' },
+39 silly resolved     main: './lib',
+39 silly resolved     dependencies:
+39 silly resolved      { 'buffer-writer': '1.0.0',
+39 silly resolved        'generic-pool': '2.1.1',
+39 silly resolved        'packet-reader': '0.2.0',
+39 silly resolved        'pg-connection-string': '0.1.3',
+39 silly resolved        'pg-types': '1.*',
+39 silly resolved        pgpass: '0.0.3',
+39 silly resolved        semver: '^4.1.0' },
+39 silly resolved     devDependencies: { async: '0.9.0', jshint: '2.5.2', 'pg-copy-streams': '0.3.0' },
+39 silly resolved     minNativeVersion: '1.7.0',
+39 silly resolved     scripts:
+39 silly resolved      { changelog: 'npm i github-changes && ./node_modules/.bin/github-changes -o brianc -r node-postgres -d pulls -a -v',
+39 silly resolved        test: 'make test-all connectionString=postgres://postgres@localhost:5432/postgres' },
+39 silly resolved     engines: { node: '>= 0.8.0' },
+39 silly resolved     gitHead: '65e12e8f9e5d129790cb42115bbf05a77cd8bed4',
+39 silly resolved     bugs: { url: 'https://github.com/brianc/node-postgres/issues' },
+39 silly resolved     _id: 'pg@4.3.0',
+39 silly resolved     _shasum: 'fbeed09363e9258500354fc97d3dd7566ff758fe',
+39 silly resolved     _from: 'pg@',
+39 silly resolved     _npmVersion: '2.0.0',
+39 silly resolved     _npmUser: { name: 'brianc', email: 'brian.m.carlson@gmail.com' },
+39 silly resolved     maintainers: [ [Object] ],
+39 silly resolved     dist:
+39 silly resolved      { shasum: 'fbeed09363e9258500354fc97d3dd7566ff758fe',
+39 silly resolved        tarball: 'http://registry.npmjs.org/pg/-/pg-4.3.0.tgz' },
+39 silly resolved     directories: {},
+39 silly resolved     _resolved: 'https://registry.npmjs.org/pg/-/pg-4.3.0.tgz',
+39 silly resolved     readme: 'ERROR: No README data found!' } ]
+40 info install pg@4.3.0 into /usr/local/lib
+41 info installOne pg@4.3.0
+42 verbose lib/node_modules/pg unbuild
+43 verbose tar unpack /Users/donnie/.npm/pg/4.3.0/package.tgz
+44 silly lockFile c6c6e594-ar-usr-local-lib-node-modules-pg tar:///usr/local/lib/node_modules/pg
+45 verbose lock tar:///usr/local/lib/node_modules/pg /Users/donnie/.npm/c6c6e594-ar-usr-local-lib-node-modules-pg.lock
+46 silly lockFile bfcefd84--donnie-npm-pg-4-3-0-package-tgz tar:///Users/donnie/.npm/pg/4.3.0/package.tgz
+47 verbose lock tar:///Users/donnie/.npm/pg/4.3.0/package.tgz /Users/donnie/.npm/bfcefd84--donnie-npm-pg-4-3-0-package-tgz.lock
+48 silly gunzTarPerm modes [ '755', '644' ]
+49 error Error: EACCES, mkdir '/usr/local/lib/node_modules/pg'
+49 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/pg']
+49 error   errno: 3,
+49 error   code: 'EACCES',
+49 error   path: '/usr/local/lib/node_modules/pg',
+49 error   fstream_type: 'Directory',
+49 error   fstream_path: '/usr/local/lib/node_modules/pg',
+49 error   fstream_class: 'DirWriter',
+49 error   fstream_stack:
+49 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+49 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53',
+49 error      'Object.oncomplete (fs.js:108:15)' ] }
+50 error Please try running this command again as root/Administrator.
+51 error System Darwin 14.1.0
+52 error command "node" "/usr/local/bin/npm" "install" "pg" "-g"
+53 error cwd /Users/donnie/Desktop/Development/Tradecraft/MailingList
+54 error node -v v0.10.36
+55 error npm -v 1.4.28
+56 error path /usr/local/lib/node_modules/pg
+57 error fstream_path /usr/local/lib/node_modules/pg
+58 error fstream_type Directory
+59 error fstream_class DirWriter
+60 error code EACCES
+61 error errno 3
+62 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/pg'
+63 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+63 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:46:53
+63 error fstream_stack Object.oncomplete (fs.js:108:15)
+64 verbose exit [ 3, true ]

@@ -1,6 +1,17 @@
-CREATE DATABASE emails;
+CREATE DATABASE mailinglist;
 
-CREATE TABLE subscribers (
+\c mailinglist;
+
+CREATE TABLE email_schedule IF NOT EXISTS (
+	id serial NOT NULL PRIMARY KEY,
+	sender_email varchar(255), 
+	email_body text,
+	email_subject text,
+	email_sequence int,
+	email_interval varchar(50)
+);
+
+CREATE TABLE users IF NOT EXISTS (
 	id serial NOT NULL PRIMARY KEY,
 	email varchar(255),
 	created timestamp NOT NULL DEFAULT clock_timestamp(),
