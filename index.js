@@ -18,27 +18,35 @@ app.use(function(req,res,next) {
 app.use(express.static(__dirname + '/views'));
 // create static directory for static assets
 app.use(express.static(__dirname + '/static'));
+// Set up response.render() to be able to read and render views that are written in EJS
+app.set("view engine", "ejs");
 
-app.get("/", function(request, response) {
+app.get("/", function(req, res) {
 	// We get access here to the request, so we can find out more information about what the requester wants.
 
 	// We also get access to the response object, which is the object that allows us to send a string (or other things) back to the requester.
-	response.send("<h1>Hello World!</h1>");
+	res.send("<h1>Hello World!</h1>");
 });
 
 //Respond to POST requests
-app.post("/submit", function(request,response,next) {
-	db.query("INSERT INTO users (email, last_email_sent) VALUES ($1, $2)", [request.body.email, null], function(err, result) {
-      if (err) {
-        if (err.code == "23502") {
-          err.explanation = "Didn't get all of the parameters in the request body. Send email and last_email_sent in the request body."
-        }
-        response.status(500).send(err);
-      } else {
-      console.log(result);
-      response.send("Thanks " + request.body.email + " for your motherf*ckin email!");
-      }
-    });
+app.post("/submit", function(req,res,next) {
+	if (validateEmail(request.body.email)) {
+		db.query("INSERT INTO users (email, last_email_sent) VALUES ($1, $2)", [req.body.email, null], function(err, result) {
+	      if (err) {
+	        if (err.code == "23502") {
+	          err.explanation = "Didn't get all of the parameters in the request body. Send email and last_email_sent in the request body."
+	        }
+	        res.status(500).send(err);
+	      } 
+	      else {
+		      console.log(result);
+		      res.send("Thanks " + req.body.email + " for your motherf*ckin email!");
+	      }
+    	});
+	}
+	else {
+		res.send(req.body.email + " ain't a valid motherf*ckin email!");
+	}
 });
 
 // Connect to postgres, then make the client available to the global scope
@@ -49,13 +57,19 @@ pg.connect(conString, function(err, client) {
 // Get all user emails
 app.get("/users", function (req, res) {
   console.log(db);
-  db.query("SELECT email FROM users", function(err, result) {
+  db.query("SELECT * FROM users", function(err, result) {
     if (err) {
       res.status(500).send(err);
     } else {
-      res.send(result.rows);
+      // Embed users in our HTML
+	  res.render("userlist", {"users" : result.rows});
     }
-  });
+  });	
 });
+
+function validateEmail(email) { 
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+} 
 
 app.listen(port);
