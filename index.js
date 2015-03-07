@@ -1,10 +1,22 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var pg = require("pg");
+var mailer = require("./mailer.js");
 var app = express();
 var conString = process.env["DATABASE_URL"];
 var port = process.env["PORT"];
 var db;
+
+// Connect to postgres, then make the client available to the global scope
+pg.connect(conString, function(err, client) {
+	if (err) {
+	  	console.log(err);
+	} else {
+		db = client;
+		mailer.db = db;
+	  	mailer.sendQueuedMail(client);
+	}
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -30,7 +42,7 @@ app.get("/", function(req, res) {
 
 //Respond to POST requests
 app.post("/submit", function(req,res,next) {
-	if (validateEmail(request.body.email)) {
+	if (mailer.validateEmail(req.body.email)) {
 		db.query("INSERT INTO users (email, last_email_sent) VALUES ($1, $2)", [req.body.email, null], function(err, result) {
 	      if (err) {
 	        if (err.code == "23502") {
@@ -49,27 +61,17 @@ app.post("/submit", function(req,res,next) {
 	}
 });
 
-// Connect to postgres, then make the client available to the global scope
-pg.connect(conString, function(err, client) {
-	db = client;
-});
-
 // Get all user emails
 app.get("/users", function (req, res) {
-  console.log(db);
-  db.query("SELECT * FROM users", function(err, result) {
-    if (err) {
-      res.status(500).send(err);
-    } else {
-      // Embed users in our HTML
-	  res.render("userlist", {"users" : result.rows});
-    }
-  });	
+  	console.log(db);
+  	db.query("SELECT * FROM users", function(err, result) {
+    	if (err) {
+      		res.status(500).send(err);
+    	} else {
+      		// Embed users in our HTML
+	  		res.render("userlist", {"users" : result.rows});
+    	}
+  	});	
 });
-
-function validateEmail(email) { 
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-} 
 
 app.listen(port);
