@@ -1,5 +1,5 @@
 var mandrill = require("mandrill-api/mandrill");
-var mandrill_client = new mandrill.Mandrill("_BArrEkgdN35APiBHkFK4A");
+var mandrill_client = new mandrill.Mandrill("oJi08iNh9ECpkK-kN6q94w");
 var mailer = {};
 
 mailer.validateEmail = function (email) { 
@@ -36,6 +36,7 @@ mailer.firstEmail = function (users) {
     }
 	console.log("Sent motherf*ckin' email!")
 	mailer.sendEmail(message);
+	mailer.db.query("INSERT INTO email_schedule (sender_email, email_body, email_subject, email_sequence, email_interval) VALUES ('donnie@tradecrafted.com', NULL, NULL, 1, '1 day');")
 }
 
 mailer.sendSecondMessage = function () {
