@@ -8,7 +8,7 @@ var port = process.env["PORT"];
 var db;
 var cron = require('cron');
 
-var cronJob = cron.job("0 */1 * * * *", function(){
+var cronJob = cron.job("0 */10 * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
     console.info('cron job completed');
     mailer.queueMail();

@@ -48,8 +48,6 @@ mailer.sendQueuedMail = function (){
 	      	mailer.sendThirdMessage();
 		}
 	})
-	// mailer.sendSecondMessage();
-	// mailer.sendThirdMessage();
 }
 
 mailer.sendNewUsersInitialMessage = function () {
