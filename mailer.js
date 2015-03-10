@@ -19,7 +19,7 @@ mailer.queueMail = function (){
 			}
 		}
 	});
-	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '7 day';", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'S2' AND last_email_sent <= now() - interval '7 days';", function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -97,7 +97,6 @@ mailer.firstEmail = function (users) {
     "subject": "Heard You Like to Party",
     "text": "Nobody parties, but me. Automatically sent via Mandrill API."
     }
-	console.log("Sent motherf*ckin' email!")
 	mailer.sendEmail(message);
 }
 
@@ -110,7 +109,6 @@ mailer.secondEmail = function (users) {
     "subject": "We Miss You!",
     "text": "We noticed you haven't partied in the last 24 hours. Well let's fix that. http://youtu.be/UADikS_P7tM. Automatically sent via Mandrill API."
     }
-    console.log("Sent 2nd motherf*ckin' email!")
 	mailer.sendEmail(message);
 }
 
@@ -123,7 +121,6 @@ mailer.thirdEmail = function (users) {
     "subject": "You're Climbing the Charts",
     "text": "Party on Garth. You've been partying a lot, so keep it up. https://www.youtube.com/watch?v=cl-HrOYKAFs. Automatically sent via Mandrill API."
     }
-    console.log("Sent 3rd motherf*ckin' email!")
 	mailer.sendEmail(message);
 }
 
