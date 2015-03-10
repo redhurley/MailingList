@@ -7,22 +7,85 @@ mailer.validateEmail = function (email) {
     return re.test(email);
 }
 
+mailer.queueMail = function (){
+	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '1 day';", function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log(result);
+			for (var i = 0; i < result.rows.length; i++) {
+				console.log(result.rows[i]);
+				mailer.db.query("UPDATE users SET sequence = 'Q2' WHERE email = ($1);", [result.rows[i].email]);
+			}
+		}
+	});
+	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '7 day';", function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			for (var j = 0; j < result.rows.length; j++) {
+				console.log(result.rows[j]);
+				mailer.db.query("UPDATE users SET sequence = 'Q3' WHERE email = ($1);", [result.rows[j].email]);
+			}
+		}
+	});
+	mailer.sendQueuedMail();
+}
+
 mailer.sendQueuedMail = function (){
-	mailer.sendNewUsersInitialMessage();
-	// other mails
-	mailer.sendSecondMessage();
+	// Query for users who haven't been sent an email in the past 24h and are in the second step in the sequence
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q2';", function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+	      	mailer.sendSecondMessage();
+		}
+	})
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q3';", function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+	      	mailer.sendThirdMessage();
+		}
+	})
+	// mailer.sendSecondMessage();
+	// mailer.sendThirdMessage();
 }
 
 mailer.sendNewUsersInitialMessage = function () {
 	// Query for new users
-	mailer.db.query("SELECT email FROM users WHERE last_email_sent IS NULL;", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE sequence IS NULL;", function(err, result) {
 	    if (err) {
 	    	console.log(err);
 	    } else {
-	    	mailer.db.query("UPDATE users SET last_email_sent=now();")
+	    	mailer.db.query("UPDATE users SET sequence='Q1' WHERE sequence IS NULL;");
 	      	mailer.firstEmail(result.rows);
+	      	mailer.db.query("UPDATE users SET last_email_sent=now(), sequence='S1' WHERE sequence='Q1';");
 	    }
 	})
+}
+
+mailer.sendSecondMessage = function () {
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q2';", function(err, result) {
+	    if (err) {
+	    	console.log(err);
+	    } else {
+	      	mailer.secondEmail(result.rows);
+	      	mailer.db.query("UPDATE users SET last_email_sent = now(), sequence='S2' WHERE sequence = 'Q2';");
+	    }
+	});
+}
+
+
+mailer.sendThirdMessage = function () {
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q3';", function(err, result) {
+	    if (err) {
+	    	console.log(err);
+	    } else {
+	      	mailer.thirdEmail(result.rows);
+	      	mailer.db.query("UPDATE users SET last_email_sent = now(), sequence='S3' WHERE sequence = 'Q3';");
+	    }
+	});
 }
 
 // Assemble a new email
@@ -36,19 +99,6 @@ mailer.firstEmail = function (users) {
     }
 	console.log("Sent motherf*ckin' email!")
 	mailer.sendEmail(message);
-	mailer.db.query("INSERT INTO email_schedule (sender_email, email_body, email_subject, email_sequence, email_interval) VALUES ('donnie@tradecrafted.com', NULL, NULL, 1, '1 day');")
-}
-
-mailer.sendSecondMessage = function () {
-	// Query for users who haven't been sent an email in the past 24h and is the second step in the sequence
-	mailer.db.query("SELECT email FROM users WHERE last_email_sent BETWEEN NOW() - INTERVAL '7 day' AND  NOW() - INTERVAL '1 day';", function(err, result) {
-		if (err) {
-			console.log(err);
-		} else {
-			mailer.db.query("UPDATE users SET last_email_sent=now();") 
-	      	mailer.secondEmail(result.rows);
-		}
-	})
 }
 
 // Assemble second email
@@ -60,7 +110,20 @@ mailer.secondEmail = function (users) {
     "subject": "We Miss You!",
     "text": "We noticed you haven't partied in the last 24 hours. Well let's fix that. http://youtu.be/UADikS_P7tM. Automatically sent via Mandrill API."
     }
-    console.log("Sent motherf*ckin' email!")
+    console.log("Sent 2nd motherf*ckin' email!")
+	mailer.sendEmail(message);
+}
+
+// Assemble third email
+mailer.thirdEmail = function (users) {
+	var message = {
+    "from_email": "donnie@tradecrafted.com",
+    "from_name": "Donnie",
+    "to": users,
+    "subject": "You're Climbing the Charts",
+    "text": "Party on Garth. You've been partying a lot, so keep it up. https://www.youtube.com/watch?v=cl-HrOYKAFs. Automatically sent via Mandrill API."
+    }
+    console.log("Sent 3rd motherf*ckin' email!")
 	mailer.sendEmail(message);
 }
 

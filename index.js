@@ -14,7 +14,7 @@ pg.connect(conString, function(err, client) {
 	} else {
 		db = client;
 		mailer.db = db;
-	  	mailer.sendQueuedMail(client);
+	  	mailer.queueMail();
 	}
 });
 
@@ -52,6 +52,7 @@ app.post("/submit", function(req,res,next) {
 	      } 
 	      else {
 		      console.log(result);
+		      mailer.sendNewUsersInitialMessage();
 		      res.send("Thanks " + req.body.email + " for your motherf*ckin email!");
 	      }
     	});
