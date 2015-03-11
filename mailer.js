@@ -17,7 +17,7 @@ mailer.queueMail = function (){
 			console.log(result);
 			for (var i = 0; i < result.rows.length; i++) {
 				console.log(result.rows[i]);
-				mailer.db.query("UPDATE users SET sequence = 'Q2' WHERE email = ($1);", [result.rows[i].email]);
+				mailer.db.query("UPDATE users SET sequence = 'Q2' WHERE sequence = 'S1' AND email = ($1);", [result.rows[i].email]);
 			}
 		}
 	});
@@ -27,7 +27,7 @@ mailer.queueMail = function (){
 		} else {
 			for (var j = 0; j < result.rows.length; j++) {
 				console.log(result.rows[j]);
-				mailer.db.query("UPDATE users SET sequence = 'Q3' WHERE email = ($1);", [result.rows[j].email]);
+				mailer.db.query("UPDATE users SET sequence = 'Q3' WHERE sequence='S2' AND email = ($1);", [result.rows[j].email]);
 			}
 		}
 	});
@@ -127,16 +127,6 @@ mailer.thirdEmail = function (users) {
 	mailer.sendEmail(message);
 }
 
-// Send the email to new users using mandrill
-mailer.sendEmail = function (message) {
-	mandrill_client.messages.send({"message": message, "async": true }, function(response) {
-	    console.log(response);
-	}, function(e) {
-	    // Mandrill returns the error as an object with name and message keys
-	    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-	});
-}
-
 // write function that reads 3 files using fs.readfile. needs to do it asynchronously
 mailer.getEmailTemplates = function (dog) {
 	var tempArray = [];
@@ -188,6 +178,16 @@ mailer.checkingSequence = function (dog) {
 	} else if (dog == "Q3") {
 		return mailer.emailTemplates[2];
 	}
+}
+
+// Send the email to new users using mandrill
+mailer.sendEmail = function (message) {
+	mandrill_client.messages.send({"message": message, "async": true }, function(response) {
+	    console.log(response);
+	}, function(e) {
+	    // Mandrill returns the error as an object with name and message keys
+	    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+	});
 }
 
 module.exports = mailer;
