@@ -7,6 +7,23 @@ var conString = process.env["DATABASE_URL"];
 var port = process.env["PORT"];
 var db;
 var cron = require('cron');
+var cluster = require('cluster');
+var numWorkers = process.env.WEB_CONCURRENCY;
+
+if(cluster.isMaster) {
+  // Master process: fork our child processes
+  for (var i = 0; i < numWorkers; i++) {
+    cluster.fork();
+  }
+
+  // Respawn any child processes that die
+  cluster.on('exit', function() {
+    cluster.fork();
+  });
+
+} else {
+  // Child process, put app initialisation code here.
+}
 
 var cronJob = cron.job("0 */10 * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
