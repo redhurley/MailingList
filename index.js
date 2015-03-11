@@ -8,7 +8,7 @@ var port = process.env["PORT"];
 var db;
 var cron = require('cron');
 
-var cronJob = cron.job("0 */10 * * * *", function(){
+var cronJob = cron.job("0 */1 * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
     console.info('cron job completed');
     mailer.queueMail();
@@ -22,6 +22,7 @@ pg.connect(conString, function(err, client) {
 	} else {
 		db = client;
 		mailer.db = db;
+		mailer.getEmailTemplates(mailer.addToEmailArray);
 	}
 });
 

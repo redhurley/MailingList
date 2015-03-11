@@ -1,6 +1,8 @@
 var mandrill = require("mandrill-api/mandrill");
+var fs = require("fs");
 var mandrill_client = new mandrill.Mandrill("oJi08iNh9ECpkK-kN6q94w");
 var mailer = {};
+var emailTemplates = [];
 
 mailer.validateEmail = function (email) { 
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -8,7 +10,7 @@ mailer.validateEmail = function (email) {
 }
 
 mailer.queueMail = function (){
-	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '1 day';", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '1 minute';", function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -19,7 +21,7 @@ mailer.queueMail = function (){
 			}
 		}
 	});
-	mailer.db.query("SELECT email FROM users WHERE sequence = 'S2' AND last_email_sent <= now() - interval '7 days';", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'S2' AND last_email_sent <= now() - interval '1 minute';", function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -88,36 +90,39 @@ mailer.sendThirdMessage = function () {
 
 // Assemble a new email
 mailer.firstEmail = function (users) {
+	var actualHTML = mailer.checkingSequence("Q1");
 	var message = {
     "from_email": "donnie@tradecrafted.com",
     "from_name": "Donnie",
     "to": users,
     "subject": "Heard You Like to Party",
-    "text": "Nobody parties, but me. Automatically sent via Mandrill API."
+    "html" : actualHTML.toString()
     }
 	mailer.sendEmail(message);
 }
 
 // Assemble second email
 mailer.secondEmail = function (users) {
+	var actualHTML = mailer.checkingSequence("Q2");
 	var message = {
     "from_email": "donnie@tradecrafted.com",
     "from_name": "Donnie",
     "to": users,
     "subject": "We Miss You!",
-    "text": "We noticed you haven't partied in the last 24 hours. Well let's fix that. http://youtu.be/UADikS_P7tM. Automatically sent via Mandrill API."
+    "html" : actualHTML.toString()
     }
 	mailer.sendEmail(message);
 }
 
 // Assemble third email
 mailer.thirdEmail = function (users) {
+	var actualHTML = mailer.checkingSequence("Q3");
 	var message = {
     "from_email": "donnie@tradecrafted.com",
     "from_name": "Donnie",
     "to": users,
     "subject": "You're Climbing the Charts",
-    "text": "Party on Garth. You've been partying a lot, so keep it up. https://www.youtube.com/watch?v=cl-HrOYKAFs. Automatically sent via Mandrill API."
+    "html" : actualHTML.toString()
     }
 	mailer.sendEmail(message);
 }
@@ -130,6 +135,59 @@ mailer.sendEmail = function (message) {
 	    // Mandrill returns the error as an object with name and message keys
 	    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
 	});
+}
+
+// write function that reads 3 files using fs.readfile. needs to do it asynchronously
+mailer.getEmailTemplates = function (dog) {
+	var tempArray = [];
+	var count = 0;
+	fs.readFile("./email_templates/email_1.html", function (err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			tempArray[0] = result;
+			count++;
+			if (count == 3) {
+				dog(tempArray);
+			}
+		}
+	})
+	fs.readFile("./email_templates/email_2.html", function (err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			tempArray[1] = result;
+			count++;
+			if (count == 3) {
+				dog(tempArray);
+			}
+		}
+	})
+	fs.readFile("./email_templates/email_3.html", function (err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			tempArray[2] = result;
+			count++;
+			if (count == 3) {
+				dog(tempArray);
+			}
+		}
+	})
+}
+
+mailer.addToEmailArray = function (emailsArray) {
+	mailer.emailTemplates = emailsArray;
+}
+
+mailer.checkingSequence = function (dog) {
+	if (dog == "Q1") {
+		return mailer.emailTemplates[0];
+	} else if (dog == "Q2") {
+		return mailer.emailTemplates[1];
+	} else if (dog == "Q3") {
+		return mailer.emailTemplates[2];
+	}
 }
 
 module.exports = mailer;
