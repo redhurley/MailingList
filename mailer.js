@@ -10,7 +10,7 @@ mailer.validateEmail = function (email) {
 }
 
 mailer.queueMail = function (){
-	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '1 minute';", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE last_email_sent <= now() - interval '1 day';", function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -21,7 +21,7 @@ mailer.queueMail = function (){
 			}
 		}
 	});
-	mailer.db.query("SELECT email FROM users WHERE sequence = 'S2' AND last_email_sent <= now() - interval '1 minute';", function(err, result) {
+	mailer.db.query("SELECT email FROM users WHERE sequence = 'S2' AND last_email_sent <= now() - interval '7 days';", function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
@@ -35,21 +35,8 @@ mailer.queueMail = function (){
 }
 
 mailer.sendQueuedMail = function (){
-	// Query for users who haven't been sent an email in the past 24h and are in the second step in the sequence
-	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q2';", function(err, result) {
-		if (err) {
-			console.log(err);
-		} else {
-	      	mailer.sendSecondMessage();
-		}
-	})
-	mailer.db.query("SELECT email FROM users WHERE sequence = 'Q3';", function(err, result) {
-		if (err) {
-			console.log(err);
-		} else {
-	      	mailer.sendThirdMessage();
-		}
-	})
+	mailer.sendSecondMessage();
+	mailer.sendThirdMessage();
 }
 
 mailer.sendNewUsersInitialMessage = function () {
