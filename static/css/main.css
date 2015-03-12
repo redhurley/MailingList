@@ -1,8 +1,20 @@
 .navbar-default {
-	background-color: #cdced5;
-	font-family: "HelveticaNeue-Medium";
+	background-color: white;
+	font-family: "HelveticaNeue-Light";
 	font-size: 36px;
-	height: 60px;
+	height: 80px;
+}
+
+#topbar-logo {
+	margin-left: 5%;
+}
+
+#logo {
+	padding-top: 20%;
+}
+
+.main-section {
+	padding-top: 130px;
 }
 
 body {
@@ -16,7 +28,7 @@ body {
 }
 
 .signup {
-	width: 70%;
+	width: 75%;
 	text-align: center;
 	height: 40px;
 	font-size: 17px;
@@ -27,4 +39,25 @@ body {
 	background-color: #cdced5;
 	color: #202244;
 	padding: 30px;
+}
+
+#title {
+	font-size: 20px;
+	font-weight: 800;
+	margin-top: 4%;
+}
+
+#subtitle {
+	font-size: 17px;
+	font-weight: 400;
+	color: gray;
+	line-height: 95%;
+}
+
+#lockup {
+	margin-left: -1.5%;
+}
+
+.description {
+	font-size: 18px;
 }
