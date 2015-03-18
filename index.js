@@ -7,23 +7,23 @@ var conString = process.env["DATABASE_URL"];
 var port = process.env["PORT"];
 var db;
 var cron = require('cron');
-var cluster = require('cluster');
-var numWorkers = process.env.WEB_CONCURRENCY;
+// var cluster = require('cluster');
+// var numWorkers = process.env.WEB_CONCURRENCY;
 
-if(cluster.isMaster) {
-  // Master process: fork our child processes
-  for (var i = 0; i < numWorkers; i++) {
-    cluster.fork();
-  }
+// if(cluster.isMaster) {
+//   // Master process: fork our child processes
+//   for (var i = 0; i < numWorkers; i++) {
+//     cluster.fork();
+//   }
 
-  // Respawn any child processes that die
-  cluster.on('exit', function() {
-    cluster.fork();
-  });
+//   // Respawn any child processes that die
+//   cluster.on('exit', function() {
+//     cluster.fork();
+//   });
 
-} else {
-  // Child process, put app initialisation code here.
-}
+// } else {
+//   // Child process, put app initialisation code here.
+// }
 
 var cronJob = cron.job("0 */10 * * * *", function(){
     // perform operation e.g. GET request http.get() etc.
@@ -58,12 +58,12 @@ app.use(express.static(__dirname + '/static'));
 // Set up response.render() to be able to read and render views that are written in EJS
 app.set("view engine", "ejs");
 
-app.get("/", function(req, res) {
-	// We get access here to the request, so we can find out more information about what the requester wants.
+// app.get("/", function(req, res) {
+// 	// We get access here to the request, so we can find out more information about what the requester wants.
 
-	// We also get access to the response object, which is the object that allows us to send a string (or other things) back to the requester.
-	res.send("<h1>Hello World!</h1>");
-});
+// 	// We also get access to the response object, which is the object that allows us to send a string (or other things) back to the requester.
+// 	res.send("<h1>Hello World!</h1>");
+// });
 
 //Respond to POST requests
 app.post("/submit", function(req,res,next) {
@@ -95,7 +95,7 @@ app.get("/users", function (req, res) {
       		res.status(500).send(err);
     	} else {
       		// Embed users in our HTML
-	  		res.render("userlist", {"users" : result.rows});
+	  		res.render("userlist", {"posers" : result.rows});
     	}
   	});	
 });
