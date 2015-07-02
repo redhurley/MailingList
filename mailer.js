@@ -1,6 +1,6 @@
 var mandrill = require("mandrill-api/mandrill");
 var fs = require("fs");
-var mandrill_client = new mandrill.Mandrill("oJi08iNh9ECpkK-kN6q94w");
+var mandrill_client = new mandrill.Mandrill("[MANDRILL-API-KEY-GOES-HERE]");
 var mailer = {};
 var emailTemplates = [];
 
